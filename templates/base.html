@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Hardware Health Tracker{% endblock %}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { 
+      background: #f1f5f9; 
+      font-family: 'Inter', sans-serif; 
+      color: #1e293b;
+    }
+    .glass-morphism {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .card {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    }
+    .badge {
+      font-size: 0.75rem;
+      padding: 0.25em 0.6em;
+      border-radius: 9999px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .table-container {
+      overflow-x: auto;
+      border-radius: 0.75rem;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      transition: all 0.2s;
+    }
+    .btn-primary:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+    .status-overdue { background-color: #ef4444; color: white; }
+    .status-upcoming { background-color: #f59e0b; color: black; }
+    .status-good { background-color: #10b981; color: white; }
+    .status-none { background-color: #94a3b8; color: white; }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    
+    .fade-in { animation: fadeIn 0.3s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+    .modal-enter {
+      animation: modalScaleIn 0.3s ease-out;
+    }
+    @keyframes modalScaleIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-hidden {
+      display: none;
+    }
+    .modal-active {
+      display: flex;
+      animation: modalScaleIn 0.3s ease-out;
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
+  <nav class="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="/" class="font-bold text-xl tracking-tight flex items-center gap-3 text-slate-800">
+            <img src="/static/images/logo.png" alt="Logo" class="w-17 h-14" />
+          <span>Hardware Health Tracker</span>
+        </a>
+        <div class="flex items-center gap-4">
+          <span class="hidden md:block text-sm font-medium text-slate-500">v1.0.0</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="bg-white border-t border-slate-200 py-8 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="text-sm text-gray-500">
+        &copy; 2026 Hardware Health Tracker | EDP - GTO.
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
