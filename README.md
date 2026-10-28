@@ -75,3 +75,52 @@ A comprehensive IT infrastructure management system designed to monitor the heal
 └── static/              # Static assets (images, CSS)
 ```
 
+## 🔄 Database Migrations (Alembic)
+
+Proyek ini menggunakan **Alembic** untuk mengelola perubahan skema database secara aman dan terstruktur. Jangan melakukan perubahan manual langsung pada database.
+
+### 🛠 Persiapan Awal
+Pastikan Anda sudah menginstal dependensi yang diperlukan:
+```bash
+pip install alembic sqlalchemy
+```
+Lakukan inisialisasi (hanya dilakukan sekali jika belum ada folder `migrations`):
+```bash
+alembic init migrations
+```
+*Pastikan `sqlalchemy.url` di file `alembic.ini` sudah sesuai dengan konfigurasi database Anda.*
+
+### 🔄 Alur Kerja Perubahan Model
+Setiap kali Anda melakukan perubahan pada file `models.py` (seperti menambah kolom, mengubah tipe data, atau menghapus tabel), ikuti langkah berikut:
+
+#### 1. Generate Migrasi Otomatis
+Alembic akan membandingkan perubahan di `models.py` dengan status database saat ini dan membuat file migrasi baru:
+```bash
+alembic revision --autogenerate -m "deskripsi_perubahan_anda"
+```
+*Contoh: `alembic revision --autogenerate -m "tambah_kolom_serial_number_hardware"`*
+
+#### 2. Tinjau File Migrasi
+Sebelum dijalankan, buka folder `migrations/versions/` dan periksa file `.py` yang baru saja dibuat. Pastikan perintah `upgrade()` di dalamnya sudah benar dan tidak ada perintah yang tidak diinginkan.
+
+#### 3. Terapkan ke Database
+Jalankan migrasi untuk memperbarui struktur database:
+```bash
+alembic upgrade head
+```
+
+### 🔙 Cara Membatalkan (Rollback)
+Jika terjadi kesalahan saat migrasi dan Anda ingin kembali ke versi sebelumnya:
+```bash
+# Kembali ke satu langkah sebelumnya
+alembic downgrade -1
+
+# Kembali ke versi tertentu (misal ke versi 0004)
+alembic downgrade 0004
+```
+
+### Tips Tambahan
+*   **Jangan hapus folder `migrations`**: Folder ini menyimpan riwayat seluruh perubahan database Anda.
+*   **Jangan ubah file di dalam folder `migrations` secara manual**: Biarkan Alembic yang mengelola isi file tersebut melalui perintah `revision`.
+
+
